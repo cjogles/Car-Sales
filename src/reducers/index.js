@@ -16,6 +16,30 @@ const initialState = {
 }
 
 export function reducer (state=initialState, action) {
-        
-    return state;
+    // console.log(state)
+        switch (action.type) {
+            case "ADD_FEAT":
+                return {
+                    ...state,
+                    additionalPrice: action.payload.price + state.additionalPrice,
+                    car: {
+                        ...state.car,
+                        features: [
+                            ...state.car.features,
+                            action.payload
+                        ]
+                    }
+                }
+            case "REMOVE_FEAT":
+                return {
+                    ...state,
+                    additionalPrice: state.additionalPrice - action.payload.price,
+                    car: {
+                        ...state.car,
+                        features: state.car.features.filter(feature => feature.id !== action.payload.id)
+                    }
+                }
+            default:
+                return state;
+        }
 }
